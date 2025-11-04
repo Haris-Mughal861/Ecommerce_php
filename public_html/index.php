@@ -17,7 +17,7 @@ $result = $mysqli->query($query);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dastkaran Store</title>
+<title>Store</title>
 <link rel="icon" type="image/png" href="shop.png">
 <style>
   body {
@@ -154,7 +154,7 @@ $result = $mysqli->query($query);
     <input type="text" placeholder="Search products...">
   </div>
   <div class="header-right">
-    <span>👋 <?= htmlspecialchars($_SESSION['username']); ?></span>
+    <span><?= htmlspecialchars($_SESSION['username']); ?></span>
     <button class="logout-btn" id="logoutBtn">Logout</button>
   </div>
 </header>

@@ -125,10 +125,15 @@ $("#loginForm").submit(function(e) {
     success: function(response) {
       const res = response.trim();
 
-      if (res === "success") {
-        showPopup("Login Successful!", "success");
+      if (res === "admin_success") {
+        showPopup("Admin Login Successful!", "success");
+        setTimeout(() => window.location.href = "../admin/admin_dashboard.php", 1500);
+      } 
+      else if (res === "user_success") {
+        showPopup("User Login Successful!", "success");
         setTimeout(() => window.location.href = "index.php", 1500);
-      } else {
+      } 
+      else {
         showPopup(res, "error");
       }
     },
@@ -137,6 +142,7 @@ $("#loginForm").submit(function(e) {
     }
   });
 });
+
 </script>
 
 

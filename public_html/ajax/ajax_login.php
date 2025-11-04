@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 require '../config.php'; 
@@ -13,20 +14,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $stmt = $mysqli->prepare("SELECT id, username, password FROM users WHERE email = ? LIMIT 1");
+    $stmt = $mysqli->prepare("SELECT id, username, password, is_admin FROM users WHERE email = ? LIMIT 1");
     $stmt->bind_param('s', $email);
     $stmt->execute();
-    $stmt->bind_result($id, $username, $hash);
+    $stmt->bind_result($id, $username, $hash, $is_admin);
 
     if ($stmt->fetch()) {
         if (password_verify($password, $hash)) {
             $_SESSION['user_id'] = $id;
             $_SESSION['username'] = $username;
-            echo "success";
+            $_SESSION['is_admin'] = $is_admin;
+
+            if ($is_admin == 1) {
+                echo "admin_success";
+            } else {
+                echo "user_success";
+            }
             exit;
         }
     }
     echo "Invalid email or password.";
-
 }
 ?>
+
