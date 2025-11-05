@@ -172,22 +172,22 @@ $("#registerForm").submit(function(e) {
       const res = response.trim();
 
       if (res === "success") {
-        showPopup("Registered successfully!", "success");
+        showPopup("Registered successfully!", "success", "#4CAF50");
         setTimeout(() => window.location.href = "login.php", 2000);
       } 
       else if (res === "All fields are required.") {
-        showPopup(" Please fill all fields.");
+        showPopup(" Please fill all fields.", "error", "#f44336");
       } 
       
       else if (res === "Email already registered.") {
-        showPopup(" Email already registered.");
+        showPopup(" Email already registered.", "error", "#f44336");
       } 
       else {
         showPopup("" + res);
       }
     },
     error: function() {
-      showPopup("Server error. Try again.");
+      showPopup("Server error. Try again.", "error", "#f44336");
     }
   });
 });

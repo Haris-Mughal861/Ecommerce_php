@@ -84,7 +84,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['is_admin'] != 1) {
       margin-top: 600px;
     }
     .logo{
-        color: yellow;
+        font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+    text-decoration: none;
     }
   </style>
 </head>

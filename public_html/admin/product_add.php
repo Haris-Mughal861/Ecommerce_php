@@ -8,26 +8,16 @@ if (!isset($_SESSION['user_id']) || $_SESSION['is_admin'] != 1) {
     exit;
 }
 
-
-
-
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = trim($_POST['name']);
-    $price = trim($_POST['price']);
+    $title = trim($_POST['title']);
     $description = trim($_POST['description']);
+    $price = trim($_POST['price']);
+    $stock = trim($_POST['stock']);
     $image = $_FILES['image'];
 
    
-
-
-
-
-
-
-
-    if (empty($name) || empty($price) || empty($description) || empty($image['name'])) {
-        $message = "All fields are required!";
+    if (empty($title) || empty($price) || empty($image['name'])) {
+        $message = "⚠ Please fill all required fields!";
     } else {
         $target_dir = "../uploads/";
         if (!is_dir($target_dir)) {
@@ -39,16 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (move_uploaded_file($image["tmp_name"], $target_file)) {
             
-
-
-            $sql = "INSERT INTO products (name, price, description, image) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO products (title, description, price, stock, image) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sdss", $name, $price, $description, $image_name);
+            $stmt->bind_param("sssdis", $title, $description, $price, $stock, $image_name);
 
             if ($stmt->execute()) {
                 $message = "Product added successfully!";
             } else {
-                $message = " Database error: " . $stmt->error;
+                $message = "Database error: " . $stmt->error;
             }
         } else {
             $message = " Failed to upload image.";
@@ -133,9 +121,10 @@ button:hover {
   <?php if (isset($message)) echo "<p class='message'>$message</p>"; ?>
 
   <form action="" method="POST" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Product Name" required>
+    <input type="text" name="title" placeholder="Product Title" required>
+    <textarea name="description" placeholder="Product Description" rows="4"></textarea>
     <input type="number" step="0.01" name="price" placeholder="Product Price" required>
-    <textarea name="description" placeholder="Product Description" rows="4" required></textarea>
+    <input type="number" name="stock" placeholder="Available Stock" value="0" required>
     <input type="file" name="image" accept="image/*" required>
     <button type="submit">Add Product</button>
   </form>
@@ -143,4 +132,3 @@ button:hover {
 
 </body>
 </html>
-
